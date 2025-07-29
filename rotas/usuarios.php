@@ -4,7 +4,6 @@ use app\classes\Usuario;
 use app\classes\factory\MiddlewareFactory;
 
 $gerenciadorRecurso->post('/usuarios', Usuario::class, 'novo', [
-    MiddlewareFactory::autenticacao(),
     MiddlewareFactory::corpoRequisicao([
         'nome' => 'string',
         'email' => 'string',
@@ -13,7 +12,6 @@ $gerenciadorRecurso->post('/usuarios', Usuario::class, 'novo', [
 ]);
 
 $gerenciadorRecurso->post('/usuarios/login', Usuario::class, 'login', [
-    MiddlewareFactory::autenticacao(),
     MiddlewareFactory::corpoRequisicao([
         'email' => 'string',
         'senha' => 'string'
