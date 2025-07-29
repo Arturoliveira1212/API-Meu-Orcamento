@@ -9,16 +9,16 @@ use app\classes\jwt\TokenJWT;
 use app\services\UsuarioService;
 
 class UsuarioController extends Controller {
-    protected function criar(array $dados) {
+    protected function criar(array $corpoRequisicao) {
         $usuario = new Usuario();
         $camposSimples = ['id', 'nome', 'email', 'senha'];
-        $this->povoarSimples($usuario, $camposSimples, $dados);
+        $this->povoarSimples($usuario, $camposSimples, $corpoRequisicao);
 
         return $usuario;
     }
 
-    public function login(array $dados) {
-        ['email' => $email, 'senha' => $senha] = $dados;
+    public function login(array $corpoRequisicao) {
+        ['email' => $email, 'senha' => $senha] = $corpoRequisicao;
 
         /** @var UsuarioService */
         $usuarioService = $this->service();
@@ -31,19 +31,6 @@ class UsuarioController extends Controller {
                 'Token' => $tokenJWT->codigo(),
                 'Duração' => $tokenJWT->validadeTokenFormatada()
             ]
-        ]);
-    }
-
-    public function salvarPermissoes(array $dados, $args) {
-        $id = intval($args['id']);
-        $permissoes = $dados['permissoes'] ?? [];
-
-        /** @var UsuarioService */
-        $usuarioService = $this->service();
-        $usuarioService->salvarPermissoes($permissoes, $id);
-
-        return $this->resposta(HttpStatusCode::OK, [
-            'message' => 'Permissões salvas com sucesso.'
         ]);
     }
 }
