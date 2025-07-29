@@ -24,7 +24,7 @@ trait Autenticavel {
         $expiraEm = $criadoEm + $duracaoEmSegundos;
 
         $payloadJWT = new PayloadJWT($id, $nome, $papel, $criadoEm, $expiraEm);
-        $token = JWT::encode($payloadJWT->toArray(), $_ENV['SECRET_KEY_JWT'], $algoritimoCriptografia);
+        $token = JWT::encode($payloadJWT->emArray(), $_ENV['SECRET_KEY_JWT'], $algoritimoCriptografia);
         $tokenJWT = new TokenJWT($token, $duracaoEmSegundos);
 
         return $tokenJWT;

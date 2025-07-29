@@ -22,7 +22,7 @@ class PayloadJWT {
         $this->exp = $exp;
     }
 
-    public function toArray() {
+    public function emArray() {
         return [
             'sub' => $this->sub,
             'name' => $this->name,

@@ -12,6 +12,7 @@ use app\classes\http\HttpStatusCode;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Routing\RouteContext;
 
 class PermissaoMiddleware implements MiddlewareInterface {
     private UsuarioService $usuarioService;

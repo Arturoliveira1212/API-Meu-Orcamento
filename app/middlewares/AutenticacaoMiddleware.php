@@ -4,6 +4,7 @@ namespace app\middlewares;
 
 use app\classes\http\HttpStatusCode;
 use app\classes\http\RespostaHttp;
+use app\classes\jwt\PayloadJWT;
 use app\traits\Autenticavel;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
