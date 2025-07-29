@@ -23,11 +23,11 @@ abstract class Controller {
         $this->service = $service;
     }
 
-    abstract protected function criar(array $dados);
+    abstract protected function criar(array $corpoRequisicao);
 
-    public function novo(array $dados, $args, $parametros) {
+    public function novo(array $corpoRequisicao, $args, $parametros) {
         $idRecursoPai = isset($args['id']) ? intval($args['id']) : null;
-        $objeto = $this->criar($dados);
+        $objeto = $this->criar($corpoRequisicao);
         $this->service()->salvar($objeto, $idRecursoPai);
 
         return $this->resposta(HttpStatusCode::CREATED, [
@@ -35,10 +35,10 @@ abstract class Controller {
         ]);
     }
 
-    public function editar(array $dados, $args, $parametros) {
+    public function editar(array $corpoRequisicao, $args, $parametros) {
         $id = intval($args['id']);
 
-        $objeto = $this->criar($dados);
+        $objeto = $this->criar($corpoRequisicao);
         $objeto->setId($id);
         $this->service()->salvar($objeto);
 
@@ -47,7 +47,7 @@ abstract class Controller {
         ]);
     }
 
-    public function obterTodos(array $dados, $args, array $parametros) {
+    public function obterTodos(array $corpoRequisicao, $args, array $parametros) {
         $objeto = $this->service()->obterComRestricoes($parametros);
 
         return $this->resposta(HttpStatusCode::OK, [
@@ -58,7 +58,7 @@ abstract class Controller {
         ]);
     }
 
-    public function obterComId(array $dados, $args) {
+    public function obterComId(array $corpoRequisicao, $args) {
         $id = intval($args['id']);
         $objeto = $this->service()->obterComId($id);
 
@@ -70,20 +70,20 @@ abstract class Controller {
         ]);
     }
 
-    public function excluirComId(array $dados, $args, $parametros) {
+    public function excluirComId(array $corpoRequisicao, $args, $parametros) {
         $id = intval($args['id']);
         $this->service()->excluirComId($id);
 
         return $this->resposta(HttpStatusCode::NO_CONTENT);
     }
 
-    protected function povoarSimples(Model $objeto, array $campos, array $dados) {
+    protected function povoarSimples(Model $objeto, array $campos, array $corpoRequisicao) {
         foreach ($campos as $campo) {
-            if (isset($dados[$campo])) {
+            if (isset($corpoRequisicao[$campo])) {
                 $metodo = 'set' . ucfirst($campo);
                 if (method_exists($objeto, $metodo)) {
                     try {
-                        $objeto->$metodo($dados[$campo]);
+                        $objeto->$metodo($corpoRequisicao[$campo]);
                     } catch (Throwable $e) {
                     }
                 }
@@ -91,12 +91,12 @@ abstract class Controller {
         }
     }
 
-    protected function povoarDateTime(Model $objeto, array $campos, array $dados) {
+    protected function povoarDateTime(Model $objeto, array $campos, array $corpoRequisicao) {
         foreach ($campos as $campo) {
-            if (isset($dados[$campo])) {
+            if (isset($corpoRequisicao[$campo])) {
                 $metodo = 'set' . ucfirst($campo);
                 if (method_exists($objeto, $metodo)) {
-                    $data = DateTime::createFromFormat('d/m/Y', $dados[$campo]);
+                    $data = DateTime::createFromFormat('d/m/Y', $corpoRequisicao[$campo]);
                     if ($data) {
                         $objeto->$metodo($data);
                     }

@@ -65,7 +65,7 @@ class GerenciadorRecurso {
             $controller = ClassFactory::makeController($controller);
             $retorno = $controller->$metodo($corpoRequisicao, $args, $parametros, $payloadJWT);
 
-            return RespostaHttp::enviarResposta($response, $retorno['status'] ?? HttpStatusCode::OK, $retorno['data'] ?? []);
+            $resposta = RespostaHttp::enviarResposta($response, $retorno['status'] ?? HttpStatusCode::OK, $retorno['data'] ?? []);
         } catch (NaoEncontradoException $e) {
             $resposta = RespostaHttp::enviarResposta($resposta, HttpStatusCode::NOT_FOUND, [
                 'message' => $e->getMessage()
