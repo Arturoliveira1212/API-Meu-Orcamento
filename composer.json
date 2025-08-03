@@ -10,13 +10,14 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\": "app"
+            "src\\": "src"
         }
     },
     "require-dev": {
         "robmorgan/phinx": "^0.16.6",
         "kahlan/kahlan": "^6.0",
-        "mockery/mockery": "^1.6"
+        "mockery/mockery": "^1.6",
+        "rector/rector": "^2.1"
     },
     "scripts": {
         "phinx": "vendor/bin/phinx",

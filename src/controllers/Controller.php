@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace src\controllers;
 
 use DateTime;
-use Throwable;
-use app\classes\http\HttpStatusCode;
-use app\classes\Model;
+use src\models\Model;
 use app\services\Service;
+use app\classes\http\HttpStatusCode;
+use Throwable;
 
 abstract class Controller {
     private Service $service;

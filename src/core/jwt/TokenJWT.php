@@ -2,24 +2,31 @@
 
 namespace app\classes\jwt;
 
+use TipoToken;
+
 class TokenJWT {
-    private string $codigo;
+    private string $token;
+    private TipoToken $tipoToken;
     private int $duracaoEmSegundos;
 
-    public function __construct(string $codigo, int $duracaoEmSegundos) {
-        $this->codigo = $codigo;
+    const DURACAO_ACCESS_TOKEN = 3600; // 1 hora
+    const DURACAO_REFRESH_TOKEN = 604800; // 7 dias
+
+    public function __construct(string $token, TipoToken $tipoToken, int $duracaoEmSegundos) {
+        $this->token = $token;
+        $this->tipoToken = $tipoToken;
         $this->duracaoEmSegundos = $duracaoEmSegundos;
     }
 
-    public function codigo() {
-        return $this->codigo;
+    public function token(): string {
+        return $this->token;
     }
 
-    public function duracaoEmSegundos() {
+    public function duracaoEmSegundos(): int {
         return $this->duracaoEmSegundos;
     }
 
-    public function validadeTokenFormatada() {
+    public function validadeTokenFormatada(): string {
         $horas = floor($this->duracaoEmSegundos / 3600);
         $minutos = floor(($this->duracaoEmSegundos % 3600) / 60);
         $segundosRestantes = $this->duracaoEmSegundos % 60;

@@ -1,12 +1,10 @@
 <?php
 
-namespace app\classes\factory;
+namespace src\core\factory;
 
 use InvalidArgumentException;
 use app\dao\BancoDadosRelacional;
-use app\dao\DAO;
-use app\services\Service;
-use app\controllers\Controller;
+use src\controllers\Controller;
 
 abstract class ClassFactory {
     public const CAMINHO_CONTROLLER = 'app\\controllers\\';

@@ -1,12 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace src\controllers;
 
-use app\classes\Usuario;
-use app\controllers\Controller;
+use app\classes\model\Usuario;
+use src\controllers\Controller;
 use app\classes\http\HttpStatusCode;
-use app\classes\jwt\TokenJWT;
-use app\services\UsuarioService;
 
 class UsuarioController extends Controller {
     protected function criar(array $corpoRequisicao) {

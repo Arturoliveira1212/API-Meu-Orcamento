@@ -1,20 +1,18 @@
 <?php
 
-namespace app\classes;
+namespace app\classes\model;
 
 class Usuario extends Model {
     private int $id = 0;
     private string $nome = '';
     private string $email = '';
     private string $senha = '';
-    private array $permissoes = [];
 
     public function __construct(
         int $id = 0,
         string $nome = '',
         string $email = '',
-        string $senha = '',
-        array $permissoes = []
+        string $senha = ''
     ) {
         $this->setId($id);
         $this->setNome($nome);

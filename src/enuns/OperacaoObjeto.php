@@ -1,6 +1,6 @@
 <?php
 
-namespace app\classes;
+namespace app\classes\model;
 
 enum OperacaoObjeto: string {
     case CADASTRAR = 'CADASTRAR';

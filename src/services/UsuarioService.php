@@ -2,6 +2,8 @@
 
 namespace app\services;
 
+use app\classes\model\RefreshToken;
+use app\classes\model\Token;
 use app\classes\OperacaoObjeto;
 use Exception;
 use app\services\Service;
@@ -11,6 +13,7 @@ use app\classes\utils\Validador;
 use app\exceptions\NaoAutorizadoException;
 use app\traits\Autenticavel;
 use app\traits\Criptografavel;
+use TipoToken;
 
 class UsuarioService extends Service {
     use Criptografavel;
@@ -88,17 +91,30 @@ class UsuarioService extends Service {
             throw new NaoAutorizadoException('Email ou senha inválidos.');
         }
 
-        $tokenJWT = $this->gerarToken(
+        $resultadoAccesToken = $this->gerarToken(
+            TipoToken::ACCESS_TOKEN,
             $usuario->getId(),
             $usuario->getNome(),
-            'usuario'
+            'usuario',
+            TokenJWT::DURACAO_ACCESS_TOKEN
         );
 
-        if (!$tokenJWT instanceof TokenJWT) {
+        $codigoRefreshToken = $this->gerarToken(
+            TipoToken::REFRESH_TOKEN,
+            $usuario->getId(),
+            $usuario->getNome(),
+            'usuario',
+            TokenJWT::DURACAO_REFRESH_TOKEN
+        );
+
+        if (empty($codigoAccessToken) || empty($codigoRefreshToken)) {
             throw new Exception('Houve um erro ao gerar o token de acesso.');
         }
 
-        return $tokenJWT;
+        return [
+            'access_token' => $accessToken,
+            'refresh_token' => $refreshToken
+        ];
     }
 
     public function obterComEmail(string $email): ?Usuario {
